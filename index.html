@@ -3,10 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My DEWA999 Page</title>
+    <title>Welcome to DEWA999</title>
 </head>
 <body>
     <h1>Welcome to DEWA999</h1>
-    <p>This is my GitHub Pages site.</p>
+    <p>Your trusted gaming platform.</p>
+    <!-- Google Sign-In Button -->
+    <div id="g_id_onload"
+         data-client_id="603276012595-72tgof89ig6pim1ma461jteruknd5ql9.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div>
+
+    <!-- JavaScript to handle Google Sign-In -->
+    <script>
+        function handleCredentialResponse(response) {
+            // Decode the JWT token if necessary
+            console.log("Encoded JWT ID token: " + response.credential);
+
+            // Use this token to authenticate on your server
+            // Example: send token to your backend
+            fetch('/google-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: response.credential })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Login successful!");
+                    window.location.href = "/dashboard.html";
+                } else {
+                    alert("Login failed!");
+                }
+            })
+            .catch(err => {
+                console.error("Error during login:", err);
+            });
+        }
+    </script>
+
+    <!-- Google Platform Library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </body>
 </html>
